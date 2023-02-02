@@ -11,7 +11,7 @@ class BaseView(View):
 
 class HomeView(BaseView):
     def get(self, request):
-        self.views['categories']= Category.objects.all()
+        self.views
         self.views['subcategories']= SubCategory.objects.all()
         self.views['sliders']= Slider.objects.all()
         self.views['ads']= Ad.objects.all()
