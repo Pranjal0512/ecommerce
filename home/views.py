@@ -17,10 +17,35 @@ class HomeView(BaseView):
         self.views['ads']= Ad.objects.all()
         self.views['brands']= Brand.objects.all()
         self.views['reviews']= Review.objects.all()
-        self.views['news_product']= Product.objects.filter(labels='new')
-        self.views['hot_product']= Product.objects.filter(labels='hot')
-        self.views['sale_product']= Product.objects.filter(labels='sale')
+        self.views['new_products']= Product.objects.filter(labels='new')
+        self.views['hot_products']= Product.objects.filter(labels='hot')
+        self.views['sale_products']= Product.objects.filter(labels='sale')
 
 
         return render(request, 'index.html', self.views)
 
+
+class CategoryView(BaseView):
+
+    def get(self, request, slug):
+         ids = Category.objects.get(slug = slug).id
+         self.views ['cat_products'] = Product.objects.filter(category_id = ids)
+         return render(request, 'category.html', self.views)
+
+
+class BrandView(BaseView):
+
+    def get(self, request, slug):
+         ids = Brand.objects.get(slug = slug).id
+         self.views ['brand_products'] = Product.objects.filter(brand_id = ids)
+         return render(request, 'brand.html', self.views)
+
+
+class SearchView(BaseView):
+    def get(self, request):
+        query = request.GET.get('query')
+        if query == "":
+            return redirect('/')
+        else:
+            self.views['search_product'] = product.objects.filter(description)
+        return render(request, 'search.html', self.views)
